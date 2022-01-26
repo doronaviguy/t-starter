@@ -1,0 +1,77 @@
+;; storage : {
+;;   cell name,
+;;   cell symbol,
+;;   int256 total_supply,
+;;   balances : {
+;;     slice address : uint256 amount
+;;   },
+;;
+;;   approvals : {
+;;     slice sender : {
+;;       slice spender: uint256 amount
+;;     }
+;;   }
+;;   uint8 initialised 
+;;   }
+
+
+_ load_data() impure {
+    slice ds = get_data().begin_parse();
+    int inited = ds~load_uint(1);     ;; inited
+    var res = (
+        ds~load_ref(),                ;; name
+        ds~load_ref(),                ;; symbol
+        ds~load_uint(256),            ;; supply
+        ds~load_dict(),               ;; owners map
+        ds~load_dict(),               ;; balances map
+        ds~load_dict()                ;; allowances map
+    );
+    ds.end_parse();
+    return res;
+}
+
+() store_data(var ds) impure {
+    (cell name, cell symbol, int supply, cell owners, cell balances, cell allowances) = ds;
+    set_data(
+        begin_cell()
+            .store_uint(1, 1)           ;; init
+            .store_ref(name)            ;; name
+            .store_ref(symbol)          ;; symbol
+            .store_uint(supply, 256)    ;; supply
+            .store_dict(owners)         ;; owners
+            .store_dict(balances)       ;; balances
+            .store_dict(allowances)     ;; allowances
+            .end_cell()
+    );
+}
+
+
+;; this the main path, all wallets are called from wallet
+;;  depoist | withdraw | harvest
+() recv_internal(int order_amount, cell in_msg_cell, slice in_msg) impure {
+
+
+}
+
+
+() recv_external(slice in_msg) impure {
+;; noop
+}
+
+
+cell name() method_id {
+    (cell name, _, _, _, _, _) = load_data();
+    return name;
+}
+
+cell symbol() method_id {
+    (_, cell symbol, _, _, _, _) = load_data();
+    return symbol;
+}
+
+
+int total_supply() method_id {
+    (_, _, int total_supply, _, _, _) = load_data();
+    return total_supply;
+}
+
