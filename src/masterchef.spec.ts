@@ -1,7 +1,7 @@
 import {Address, Cell} from "ton";
 import {readFile} from "fs/promises";
 import {buildDataCell, stringToCell, MasterchefConfig} from "./masterchef.data";
-import { MasterchefDebug} from "./masterchef.deubg";
+import { MasterchefDebug} from "./masterchef.debug";
 
 
 const myAddress = Address.parseFriendly('EQD4FPq-PRDieyQKkizFTRtSDyucUIqrj0v_zXJmqaDp6_0t').address;
@@ -36,8 +36,6 @@ describe('SmartContract', () => {
         let contract = await MasterchefDebug.create(DefaultConfig)
         expect(await contract.getSupply()).toEqual(DefaultConfig.totalSupply);
     })
-
-
 
 //     it('should mint a single token ', async () => {
 //         let contract = await MasterchefDebug.create(DefaultConfig)
