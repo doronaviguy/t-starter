@@ -13,11 +13,11 @@ const contractAddress = Address.parse('EQD4FPq-PRDieyQKkizFTRtSDyucUIqrj0v_zXJmq
 
 
 export class MasterchefDebug {
-    private constructor(public readonly contract: SmartContract) {
+    contract: SmartContract;
 
+    private constructor(public readonly smart_contract: SmartContract) {
+        this.contract = smart_contract;
     }
-
-    
 
     async getTokenUri(tokenId: number) {
         let res = await this.contract.invokeGetMethod('token_uri', [{ type: 'int', value: tokenId.toString() }])
@@ -47,7 +47,6 @@ export class MasterchefDebug {
 
     async getSymbol() {
         let res = await this.contract.invokeGetMethod('symbol', [])
-        console.log(res);
         return sliceToString(Slice.fromCell(res.result[0] as Cell))
     }
 
