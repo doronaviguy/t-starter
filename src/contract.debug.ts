@@ -1,6 +1,6 @@
 import {readFile} from "fs/promises";
 import {SmartContract} from "ton-contract-executor";
-import {buildDataCell, stringToCell, MasterchefConfig} from "./masterchef.data";
+import {buildDataCell, stringToCell, MasterchefConfig} from "./contract.data";
 import {Address, Cell, CellMessage, InternalMessage, Slice} from "ton";
 import BN from "bn.js";
 
@@ -12,7 +12,7 @@ function sliceToString(s: Slice) {
 const contractAddress = Address.parse('EQD4FPq-PRDieyQKkizFTRtSDyucUIqrj0v_zXJmqaDp6_0t')
 
 
-export class MasterchefDebug {
+export class ContractDebug {
     contract: SmartContract;
 
     private constructor(public readonly smart_contract: SmartContract) {
@@ -87,9 +87,9 @@ export class MasterchefDebug {
     }
 
     static async create(config: MasterchefConfig) {
-        let source = (await readFile('./src/masterchef.fc')).toString('utf-8')
+        let source = (await readFile('./src/contract.fc')).toString('utf-8')
         let contract = await SmartContract.fromFuncSource(source, buildDataCell(config), { getMethodsMutate: true })
 
-        return new MasterchefDebug(contract)
+        return new ContractDebug(contract)
     }
 }

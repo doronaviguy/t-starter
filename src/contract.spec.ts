@@ -1,7 +1,7 @@
 import {Address, Cell} from "ton";
 import {readFile} from "fs/promises";
-import {buildDataCell, stringToCell, MasterchefConfig} from "./masterchef.data";
-import { MasterchefDebug} from "./masterchef.debug";
+import {buildDataCell, stringToCell, MasterchefConfig} from "./contract.data";
+import { ContractDebug } from "./contract.debug";
 
 
 const myAddress = Address.parseFriendly('EQD4FPq-PRDieyQKkizFTRtSDyucUIqrj0v_zXJmqaDp6_0t').address;
@@ -19,26 +19,26 @@ describe('SmartContract', () => {
     let source: string
 
     beforeAll(async () => {
-        source = (await readFile('./src/masterchef.fc')).toString('utf-8')
+        source = (await readFile('./src/contract.fc')).toString('utf-8')
     })
 
     it('should return name', async () => {
-        let contract = await MasterchefDebug.create(DefaultConfig)
+        let contract = await ContractDebug.create(DefaultConfig)
         expect(await contract.getName()).toEqual(DefaultConfig.name)
     })
 
     it('should return symbol', async () => {
-        let contract = await MasterchefDebug.create(DefaultConfig)
+        let contract = await ContractDebug.create(DefaultConfig)
         expect(await contract.getSymbol()).toEqual(DefaultConfig.symbol)
     })
 
     it('should return total_supply', async () => {
-        let contract = await MasterchefDebug.create(DefaultConfig)
+        let contract = await ContractDebug.create(DefaultConfig)
         expect(await contract.getSupply()).toEqual(DefaultConfig.totalSupply);
     })
 
 //     it('should mint a single token ', async () => {
-//         let contract = await MasterchefDebug.create(DefaultConfig)
+//         let contract = await ContractDebug.create(DefaultConfig)
 
 //         let res = await contract.mint(myAddress)
 //         expect(res.exit_code).toBe(0)

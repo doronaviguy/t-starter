@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest src/masterchef.spec.ts"
+    "test": "npx jest src/contract.spec.ts"
   },
   "author": "",
   "license": "ISC",
