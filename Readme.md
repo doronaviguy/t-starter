@@ -14,7 +14,11 @@ This setup includes , running fift with **jest** tests written and typescript
 ### Directory  `/src`
 
 Data -          `contract.data.ts`
+
 Debug Wrapper - `contract.debug.ts`
+
 Tests -         `contract.spec.ts`
+
 Contract -      `contract.fc`
+
 deployment -    `deploy.ts`
